@@ -97,9 +97,9 @@ app.post('/search', async(req, res) => {
     let results = await dbo.collection("product").find({ name: searchCondition }).toArray();
 
     if (results.length === 0) {
-        res.render('indexs', { error: `No products were found with the keyword is: ${nameInput}` })
+        res.render('index', { error: `No products were found with the keyword is: ${nameInput}` })
     } else {
-        res.render('indexs', { model: results, count: results.length })
+        res.render('index', { model: results, count: results.length })
     }
 
 })
