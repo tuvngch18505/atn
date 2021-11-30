@@ -118,6 +118,6 @@ app.get('/login', (req, res) => {
     res.render('login')
 })
 
-module.exports = app;
-app.listen(process.env.port || 3000);
+
+app.listen(process.env.port || 5000);
 console.log('Web server is listening at port ' + (process.env.port || 3000));
