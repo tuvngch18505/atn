@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link href="css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src=" js/bootstrap.bundle.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+    <nav>
+        <div class="nav-left">
+            <img src="img/logo.jpg" alt="" class="logo">
+            <ul>
+                <li>
+                    <a href="/index">Home</a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/tuvngch18505/">Contact</a>
+                </li>
+                <li>
+                    <a href="">About</a>
+                </li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <ul>
+                <li>
+                    <a href="/index">Admin</a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+    <div class="container">
+        <Br>
+        <h1 class="mt-1 mb-4" style="text-align:center">All Products</h1>
+        <div class="row">
+            {{# each model}}
+            <div class="col-md-4">
+                <div class="card mb-4">
+
+                    <img src="upload/{{image}}" class="card-img-top" style="width: 200px height: 200px">
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{ name }}</h5>
+
+                        <div class="d-flex justify-content-between align-item-center">
+                            <a href="" class="btn btn-dark">View details</a>
+                            <span class="h5 mt-auto">{{ price }}
+                                VND</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/ each}}
+        </div>
+    </div>
+
+</body>
+
+</html>
