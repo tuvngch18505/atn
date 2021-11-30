@@ -119,5 +119,8 @@ app.get('/login', (req, res) => {
 })
 
 
-app.listen(process.env.port || 5000);
-console.log('Web server is listening at port ' + (process.env.port || 5000));
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT);
+
+console.log(`Server running at port ${PORT}`);
