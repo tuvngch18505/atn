@@ -89,7 +89,20 @@ app.post('/create', upload.single('myImage'), async(req, res) => {
     await dbo.collection("product").insertOne(newValues)
     res.redirect('/index')
 })
+app.post('/search', async(req, res) => {
+    let nameInput = req.body.txtName
+    let client = await MongoClient.connect(url)
+    let searchCondition = new RegExp(nameInput, 'i')
+    let dbo = client.db('atn')
+    let results = await dbo.collection("product").find({ name: searchCondition }).toArray();
 
+    if (results.length === 0) {
+        res.render('indexs', { error: `No products were found with the keyword is: ${nameInput}` })
+    } else {
+        res.render('indexs', { model: results, count: results.length })
+    }
+
+})
 app.get('/index', async(req, res) => {
     let client = await MongoClient.connect(url);
     let dbo = client.db("atn");
