@@ -40,36 +40,31 @@ var upload = multer({
     }
 })
 
-app.post('/edit', async(req, res) => {
+app.post('/edit', upload.single('myImage'), async(req, res) => {
     let id = req.body.id
     let nameInput = req.body.txtName
     let priceInput = req.body.txtPrice
     let colorInput = req.body.txtColor
+    let imageInput = req.file.filename
     let descriptionInput = req.body.txtDescription
     let newValues = {
-        $set: { name: nameInput, price: priceInput, color: colorInput, description: descriptionInput }
+        $set: { name: nameInput, price: priceInput, color: colorInput, image: imageInput, description: descriptionInput }
     }
-    var ObjectID = require('mongodb').ObjectID
-    let condition = { "_id": ObjectID(id) }
-    let client = await MongoClient.connect(url)
-    let dbo = client.db('atn')
-    await dbo.collection('product').updateOne(condition, newValues)
-    res.redirect('index')
+    var ObjectID = require('mongodb').ObjectID;
+    let condition = { "_id": ObjectID(id) };
+    let client = await MongoClient.connect(url);
+    let dbo = client.db('atn');
+    await dbo.collection('product').updateOne(condition, newValues);
+    res.redirect('index');
 })
 
 app.get('/edit', async(req, res) => {
     let id = req.query.id;
-
     var ObjectID = require('mongodb').ObjectID;
-
     let condition = { "_id": ObjectID(id) };
-
     let client = await MongoClient.connect(url);
-
     let dbo = client.db("atn");
-
     let productToEdit = await dbo.collection("product").findOne(condition, {});
-
     res.render('edit', { product: productToEdit })
 })
 
@@ -101,7 +96,6 @@ app.post('/search', async(req, res) => {
     } else {
         res.render('index', { model: results, count: results.length })
     }
-
 })
 app.get('/index', async(req, res) => {
     let client = await MongoClient.connect(url);
@@ -125,6 +119,17 @@ app.get('/', async(req, res) => {
     let dbo = client.db("atn");
     let results = await dbo.collection("product").find({}).toArray();
     res.render('indexx', { model: results })
+})
+
+app.get('/detail', async(req, res) => {
+    let id = req.query.id;
+    var ObjectID = require('mongodb').ObjectID;
+    let condition = { "_id": ObjectID(id) };
+    let client = await MongoClient.connect(url);
+    let dbo = client.db("atn");
+    let productToDetail = await dbo.collection("product").findOne(condition, {});
+    res.render('detail', { product: productToDetail })
+
 })
 
 app.get('/login', (req, res) => {

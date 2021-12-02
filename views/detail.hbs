@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Bootsrap 4 CDN-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!--Fontawesome CDN-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/admin.css">
+
+    <title>Index Admin</title>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-left">
+            <img src="img/logo.jpg" alt="" class="logo">
+            <ul>
+                <li>
+                    <a href="/index">Home</a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/tuvngch18505/">Contact</a>
+                </li>
+                <li>
+                    <a href="">About</a>
+                </li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <ul>
+                <li>
+                    <a href="/">Back To Website</a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row mt-3 mb-4">
+            
+            <div class="col-md-4">
+                <img src="upload/{{product.image}}" class="card-img-top">
+            </div>
+            <div class="col-md-8">
+                <h1 class="mt-4 mt-md-0">{{ product.name }}</h1>
+                <h2>{{ product.price }} VND</h2>
+                <hr>
+                <b>Description: </b>{{ product.description }} <br>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
