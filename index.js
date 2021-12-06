@@ -1,6 +1,8 @@
 var express = require('express');
 var app = express();
+
 app.set('view engine', 'hbs');
+
 var hbs = require('hbs');
 
 app.use(express.static(__dirname + '/public'));
@@ -78,12 +80,20 @@ app.post('/create', upload.single('myImage'), async(req, res) => {
     var colorInput = req.body.txtColor
     var descriptionInput = req.body.txtDescription
     var imageInput = req.file.filename
-    var newValues = { name: nameInput, price: priceInput, color: colorInput, image: imageInput, description: descriptionInput }
-    var client = await MongoClient.connect(url)
-    var dbo = client.db("atn");
-    await dbo.collection("product").insertOne(newValues)
-    res.redirect('/index')
+    if (nameInput.length <= 4) {
+        res.render('create', {
+            Error: "Name product must be more than 4 character!!!"
+        });
+    } else {
+        var newValues = { name: nameInput, price: priceInput, color: colorInput, image: imageInput, description: descriptionInput }
+        var client = await MongoClient.connect(url)
+        var dbo = client.db("atn");
+        await dbo.collection("product").insertOne(newValues)
+        res.redirect('/index')
+    }
+
 })
+
 app.post('/search', async(req, res) => {
     let nameInput = req.body.txtName
     let client = await MongoClient.connect(url)
@@ -97,6 +107,7 @@ app.post('/search', async(req, res) => {
         res.render('index', { model: results, count: results.length })
     }
 })
+
 app.get('/index', async(req, res) => {
     let client = await MongoClient.connect(url);
     let dbo = client.db("atn");
@@ -136,10 +147,8 @@ app.get('/login', (req, res) => {
     res.render('login')
 })
 
-
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT);
-
 
 console.log(`Server running at port ${PORT}`);

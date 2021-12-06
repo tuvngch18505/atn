@@ -28,14 +28,14 @@
                         <a href="https://www.facebook.com/tuvngch18505/">Contact</a>
                     </li>
                     <li>
-                        <a href="">About</a>
+                        <a href="https://www.facebook.com/tuvngch18505/about">About</a>
                     </li>
                 </ul>
             </div>
             <div class="nav-right">
                 <ul>
                     <li>
-                        <a href="">Login</a>
+                        <a href="index">Back to Website</a>
                     </li>
                 </ul>
 
@@ -46,7 +46,13 @@
     <div class="container">
         <br>
         <h3 style="text-align: center;"> Create Product</h3>
-
+        <div>
+            {{#if Error}}
+            <div class="alert alert-warning">
+                {{Error}}
+            </div>
+            {{/if}}
+        </div>
         {{#if message}}
         <div class="message">
             {{#each message}}
