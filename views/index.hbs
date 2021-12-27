@@ -107,7 +107,7 @@
                             class="btn btn-warning"><i class="fas fa-edit"></i>Edit</a>
                         <br>
                         <a style="width: 80px; heigh: 80px; margin-top: 10px" type="button" href="delete?id={{_id}}"
-                            class="btn btn-danger"><i class="fas fa-trash-alt"></i>Delete</a>
+                            class="btn btn-danger" onclick="return confirm('Are you sure delete product??!!')"><i class="fas fa-trash-alt"></i>Delete</a>
                     </th>
                 </tbody>
                 {{/ each}}

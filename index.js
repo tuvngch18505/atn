@@ -16,10 +16,11 @@ var url = 'mongodb+srv://bboyfinger:bboyfinger123@cluster0.q601u.mongodb.net/atn
 var MongoClient = require('mongodb').MongoClient;
 
 hbs.registerHelper('add', (index) => {
-        index++;
-        return index;
-    })
-    //multer
+    index++;
+    return index;
+})
+
+//multer
 
 var multer = require('multer');
 var storage = multer.diskStorage({
@@ -111,7 +112,7 @@ app.post('/search', async(req, res) => {
 app.get('/index', async(req, res) => {
     let client = await MongoClient.connect(url);
     let dbo = client.db("atn");
-    let results = await dbo.collection("product").find({}).toArray();
+    let results = await dbo.collection("product").find({}).sort({ _id: 1 }).limit(10).toArray();
     res.render('index', { model: results })
 })
 
@@ -128,7 +129,7 @@ app.get('/delete', async(req, res) => {
 app.get('/', async(req, res) => {
     let client = await MongoClient.connect(url);
     let dbo = client.db("atn");
-    let results = await dbo.collection("product").find({}).toArray();
+    let results = await dbo.collection("product").find({}).sort({ _id: 1 }).limit(10).toArray();
     res.render('indexx', { model: results })
 })
 
@@ -141,10 +142,6 @@ app.get('/detail', async(req, res) => {
     let productToDetail = await dbo.collection("product").findOne(condition, {});
     res.render('detail', { product: productToDetail })
 
-})
-
-app.get('/login', (req, res) => {
-    res.render('login')
 })
 
 const PORT = process.env.PORT || 5000;
