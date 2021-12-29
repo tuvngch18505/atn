@@ -22,21 +22,20 @@ hbs.registerHelper('add', (index) => {
 
 //multer
 
-var multer = require('multer');
-var storage = multer.diskStorage({
-    destination: (req, res, cb) => {
-        cb(null, 'public/upload')
+var multer = require('multer'); //  thu viện multer
+var storage = multer.diskStorage({ //storage cau hình image se upload vào đâu
+    destination: (req, res, cb) => { // destination khai báo file cuối cùng sẽ đi về đâu lên sever rồi sẽ đi về đâu
+        cb(null, 'public/upload') // cb là call back sau khi lên server rồi gọi về callback
     },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + "-" + file.originalname)
+    filename: (req, file, cb) => { //filename khi nguoi dung chon ten duoi máy là a khi lên server sẽ là a123
+        cb(null, Date.now() + "-" + file.originalname) //file/originalname tránh trùng lặp file với date
     }
 })
-var upload = multer({
+var upload = multer({ //upload là kt dung lượng file
     storage: storage,
     fileFilter: (req, file, cb) => {
-        console.log(file);
         if (file.mimetype == "image/bmp" || file.mimetype == "image/png" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
-            cb(null, true)
+            cb(null, true) //mimtype kiem tra những loại ảnh nào được up
         } else {
             return cb(new Error('Only image are allowed'))
         }
@@ -68,6 +67,10 @@ app.get('/edit', async(req, res) => {
     let client = await MongoClient.connect(url);
     let dbo = client.db("atn");
     let productToEdit = await dbo.collection("product").findOne(condition, {});
+    if (productToEdit.Color == "Pink") {
+        const error = 'product is pink not edit';
+        res.redirect("edit")
+    }
     res.render('edit', { product: productToEdit })
 })
 
@@ -76,11 +79,13 @@ app.get("/create", (req, res) => {
 })
 
 app.post('/create', upload.single('myImage'), async(req, res) => {
+
     var nameInput = req.body.txtName
     var priceInput = req.body.txtPrice
     var colorInput = req.body.txtColor
     var descriptionInput = req.body.txtDescription
     var imageInput = req.file.filename
+
     if (nameInput.length <= 4) {
         res.render('create', {
             Error: "Name product must be more than 4 character!!!"
@@ -122,8 +127,15 @@ app.get('/delete', async(req, res) => {
     let condition = { "_id": ObjectID(id) };
     let client = await MongoClient.connect(url);
     let dbo = client.db("atn");
-    await dbo.collection("product").deleteOne(condition);
-    res.redirect('index')
+    const result = await dbo.collection("product").findOne(condition)
+    if (result.price >= 10) {
+        res.render('index', { error: "Price cannot be deleted when price is greater than 10" })
+
+    } else {
+        await dbo.collection("product").deleteOne(condition);
+        res.redirect('index')
+    }
+
 })
 
 app.get('/', async(req, res) => {
