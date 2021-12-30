@@ -125,17 +125,11 @@ app.get('/delete', async(req, res) => {
     let id = req.query.id;
     var ObjectID = require('mongodb').ObjectID;
     let condition = { "_id": ObjectID(id) };
+    zz
     let client = await MongoClient.connect(url);
     let dbo = client.db("atn");
-    const result = await dbo.collection("product").findOne(condition)
-    if (result.price >= 10) {
-        res.render('index', { error: "Price cannot be deleted when price is greater than 10" })
-
-    } else {
-        await dbo.collection("product").deleteOne(condition);
-        res.redirect('index')
-    }
-
+    await dbo.collection("product").deleteOne(condition);
+    res.redirect('index')
 })
 
 app.get('/', async(req, res) => {
